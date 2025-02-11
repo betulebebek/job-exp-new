@@ -1,12 +1,11 @@
 package com.betus.jobexpnew;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.*;
+
 
 @Slf4j
 @Service
@@ -21,14 +20,16 @@ public class RecordService {
         this.recordRepository = recordRepository;
     }
 
+
     @Scheduled(cron = "0 */2 * * * ?")
-    public void saveRandomRecord() {
+    public void saveRandomRecord() throws RecordCreationException {
         try {
             Record record = createRandomRecord();
             recordRepository.saveAndFlush(record);
             log.info("Saved record: {}", record);
-        } catch (Exception e) {
-            log.error("Error occurred while saving record: ", e);
+        } catch (Exception exception) {
+            log.error("Error saving record", exception);
+            throw new RecordCreationException("Error occurred while saving record: ");
         }
     }
 
@@ -40,8 +41,8 @@ public class RecordService {
 
         Record record = new Record();
         record.setName(randomName);
-        record.setCreatedAtTimestamp(new Timestamp(System.currentTimeMillis()));
-        record.setCreatedAt(new java.sql.Date(System.currentTimeMillis()));
+        record.setCreatedAtTimestamp(System.currentTimeMillis());
+        record.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
 
         return record;
     }

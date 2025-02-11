@@ -2,7 +2,6 @@ package com.betus.jobexpnew;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -19,16 +18,16 @@ public class Record {
     private String name;
 
     @Column(name = "time_stamp")
-    private Timestamp createdAtTimestamp;
+    private Long createdAtTimestamp;
 
     @Column(name = "date")
-    private Date createdAt;
+    private Timestamp createdAt;
 
 
     public Record() {
     }
 
-    public Record(String tableName, Timestamp createdAtTimestamp, Date createdAt) {
+    public Record(String tableName, Long createdAtTimestamp, Timestamp createdAt) {
         this.name = tableName;
         this.createdAtTimestamp = createdAtTimestamp;
         this.createdAt = createdAt;
@@ -36,9 +35,9 @@ public class Record {
 
     @Override
     public String toString() {
-        return "CreatingTable{" +
+        return "Record{" +
                 "id=" + id +
-                ", tableName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", createdAtTimestamp=" + createdAtTimestamp +
                 ", createdAt=" + createdAt +
                 '}';
@@ -60,19 +59,19 @@ public class Record {
         this.name = name;
     }
 
-    public Timestamp getCreatedAtTimestamp() {
+    public Long getCreatedAtTimestamp() {
         return createdAtTimestamp;
     }
 
-    public void setCreatedAtTimestamp(Timestamp createdAtTimestamp) {
+    public void setCreatedAtTimestamp(Long createdAtTimestamp) {
         this.createdAtTimestamp = createdAtTimestamp;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 }
